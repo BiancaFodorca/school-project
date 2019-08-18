@@ -1,0 +1,21 @@
+<div class="content-box">
+  <h3 style="text-align:center"><i>Capitol curent</i></h3>
+  <hr>
+ 
+<div class="row">
+    <div class="col-3">
+        <i>Capitolul este: </i>
+        <p class="link"><i class="fa fa-book"></i>&nbsp; {{linkBook}}</p>
+      </div>
+      <div class="col-4">
+          <img height="60%" src="./././assets/images/book3.png" alt="Profesor"/>
+        </div>
+      <div class="col-3">
+        <i>Fisiere aditionale: </i>
+        <div *ngFor="let attachment of linkAttachmentsList">
+          <p class="link"> <i class="fa fa-book"></i>&nbsp;  {{attachment}}</p>
+        </div>
+      </div>
+     
+</div>
+</div>

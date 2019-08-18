@@ -1,0 +1,28 @@
+<div class="content-box">
+    <h3 style="text-align:center"><i>Incarcare capitol curent</i></h3>
+    <hr>
+  <div class="col-lg-6">
+    <div class="form-group">
+      <label for="file"><strong>Incarca un nou capitol:</strong></label><br>
+      <input type="file"
+             id="file"
+             (change)="handleFileInput($event.target.files)">
+    </div>
+    <div class="form-group">
+      <label for="file"><strong>Denumire capitol:</strong></label><br>
+      <input type="text" [(ngModel)]="name" class="form-control">
+    </div>
+  </div>
+  <hr>
+  <button class="btn btn-primary" (click)="uploadSelectedFile()">Incarca fisierul incarcat </button>
+  <button class="btn btn-warning" (click)="uploadMoreFiles()">Adauga fisiere suplimentare </button>
+  <div class="col-lg-6" *ngIf="displayMoreInputs">
+      <br>
+     <input type="file"  id="file" (change)="handleSuplimentedFileInput($event.target.files)">
+     <input type="file" id="file" (change)="handleSuplimentedFileInput($event.target.files)">
+     <input type="file" id="file" (change)="handleSuplimentedFileInput($event.target.files)">
+     <input type="file" id="file" (change)="handleSuplimentedFileInput($event.target.files)">
+  </div>
+  <br>
+  <button *ngIf="displayMoreInputs" class="btn btn-primary" (click)="uploadSelectedFiles()">Incarca fisierele suplimentare </button>
+</div>
