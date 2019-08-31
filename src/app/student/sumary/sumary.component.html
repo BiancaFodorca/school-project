@@ -1,9 +1,12 @@
 <div class="content-box">
-    <h3 style="text-align:center"><i>Aplicatia 7</i></h3>
+    <h3 style="text-align:center"><i>Aplicatia 6</i></h3>
     <hr>
-    <div class="row">
+    <div class="row" *ngIf="noSelectedBook">
+        <app-no-book-selected></app-no-book-selected>
+    </div>
+    <div class="row" *ngIf="!noSelectedBook">
       <div class="col-4">
-          <img height="60%" src="./././assets/images/hand1.png" alt="Profesor"/>
+          <img class="photo" src="./././assets/images/hand1.png" alt="Profesor"/>
       </div>
       <div class="col-6">
         <h5><i>
@@ -12,14 +15,15 @@
         </i></h5>
         <div class="row">
             <div class="col-10">
-                <textarea [(ngModel)]="cvintet" cols="90" rows="20"></textarea>
+                <textarea [(ngModel)]="sumary" cols="90" rows="20"></textarea>
             </div>
         </div>
         <div class="row">
             <div class="col-2">
-                <button class="btn btn-primary">Salveaza</button>
+                <button class="btn btn-primary" (click)="createSumary()">Salveaza</button>
             </div>
         </div>
       </div>
     </div>
   </div>
+  <simple-notifications></simple-notifications>

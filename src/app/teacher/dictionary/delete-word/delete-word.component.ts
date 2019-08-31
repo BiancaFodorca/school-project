@@ -21,9 +21,14 @@ export class DeleteWordComponent implements OnInit {
   }
 
   deleteWord() {
-    this.dictionaryService.deleteWord(this.word.id).subscribe(resp => {
-      console.log(resp);
-    });
+    this.dictionaryService.deleteWord(this.word.id).subscribe(
+      resp => {
+        this.dictionaryService.sendMessage('dsuccess');
+      },
+      error => {
+        this.dictionaryService.sendMessage('derror');
+      }
+    );
     this.activeModal.close('Modal Closed');
   }
 }

@@ -3,19 +3,32 @@
   <hr>
  
 <div class="row">
-    <div class="col-3">
-        <i>Capitolul este: </i>
-        <p class="link"><i class="fa fa-book"></i>&nbsp; {{linkBook}}</p>
-      </div>
-      <div class="col-4">
-          <img height="60%" src="./././assets/images/book3.png" alt="Profesor"/>
+  <div class="col-6">
+    <div class="row">
+        <div class="col-6 mr-3">
+          <select class="form-control" (change)="selectBookFromList($event)">
+            <option [disabled]="true">Selectati o carte</option>
+            <option *ngFor="let book of bookList" [ngValue]="book">{{book.fileName}}</option>
+          </select>
         </div>
-      <div class="col-3">
-        <i>Fisiere aditionale: </i>
-        <div *ngFor="let attachment of linkAttachmentsList">
-          <p class="link"> <i class="fa fa-book"></i>&nbsp;  {{attachment}}</p>
+        <div class="col-2 ml-3">
+              <img height="50%" src="./././assets/images/book3.png" alt="Profesor"/>
         </div>
-      </div>
-     
+    </div>
+  </div>
+  <div class="col-6" *ngIf="linkBook">
+    <div class="row">
+        <div class="col-6">
+            <i>Capitolul este: </i>
+            <p><i class="fa fa-book"></i>&nbsp; {{linkBook}} - <span (click)="downloadBook(linkBook,'carte')" class="link">Descarca</span></p>
+        </div>
+        <div class="col-6">
+            <i>Fisiere aditionale: </i>
+            <div *ngFor="let attachment of linkAttachmentsList">
+              <p> <i class="fa fa-book"></i>&nbsp; {{attachment.fileName}} - <span (click)="downloadBook(attachment.fileName,'atasament')" class="link">Descarca</span>  </p>
+            </div>
+        </div>
+    </div>
+  </div>
 </div>
 </div>

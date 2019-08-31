@@ -15,6 +15,7 @@ import { NgbPaginationModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormWordComponent } from './dictionary/form-word/form-word.component';
 import { DeleteWordComponent } from './dictionary/delete-word/delete-word.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgbPaginationModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    SimpleNotificationsModule
   ],
   declarations: [
     UploadBookComponent,

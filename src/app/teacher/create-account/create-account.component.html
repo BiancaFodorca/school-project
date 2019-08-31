@@ -6,7 +6,7 @@
         <img class="rounded-image" src="./././assets/images/teacher.png" alt="Profesor"/>
     </div>
     <div class="col-6">
-        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <form [formGroup]="profileForm">
             <div class="form-group">
                 <label for="firstName"> Prenume: </label>
                 <input id="firstName" type="text" class="form-control" formControlName="firstname">
@@ -16,17 +16,18 @@
                 <input id="lastName" type="text" class="form-control" formControlName="lastname">
             </div>
             <div class="form-group">
-                <label for="lasttName"> Adresa: </label>
-                <input id="lastName" type="text" class="form-control" formControlName="email">
+                <label for="lasttName"> Adresa email: </label>
+                <input id="lastName" type="emial" class="form-control" formControlName="email">
             </div>
             <div class="form-group">
                 <label for="password"> Parola: </label>
-                <input id="password" type="text" class="form-control" formControlName="password">
+                <input id="password" type="password" class="form-control" formControlName="password">
             </div>
             <div class="form-group">
                 <label for="role"> Rol: </label>
                 <!-- <input id="role" type="text" class="form-control" formControlName="role"> -->
                 <select class="form-control" formControlName="role" (change)="selectRole($event)">
+                    <option disabled>Selectati un rol</option>
                     <option *ngFor="let r of roles; let i=index" [value]="r.id" > {{r.name}} </option>
                 </select>                 
             </div>
@@ -34,7 +35,7 @@
                 <label for="role"> Descriere: </label>
                 <textarea id="role" type="text" class="form-control" formControlName="description" rows="6" cols="50"></textarea>
             </div>
-            <button class="btn btn-primary">Salveaza cont</button>
+            <button class="btn btn-primary" (click)="saveProfile()">Salveaza cont</button>
           </form>
     </div>
     <div class="col-3">
@@ -43,3 +44,4 @@
   </div>
     
 </div>
+<simple-notifications></simple-notifications>

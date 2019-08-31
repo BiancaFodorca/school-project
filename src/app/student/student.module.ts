@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutStudentComponent } from './about-student/about-student.component';
 import { StudentDictionaryComponent } from './student-dictionary/student-dictionary.component';
-import { FormWordComponent } from './student-dictionary/form-word/form-word.component';
 import { QuoteComponent } from './quote/quote.component';
 import { GraphComponent } from './graph/graph.component';
 import { LyricsComponent } from './lyrics/lyrics.component';
@@ -15,6 +14,8 @@ import { MapComponent } from './map/map.component';
 import { NavBarStudentComponent } from './nav-bar-student/nav-bar-student.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalGraphComponent } from './graph/modal-graph/modal-graph.component';
+import { NoBookSelectedComponent } from './no-book-selected/no-book-selected.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 const routes: Routes = [
   {
@@ -40,14 +41,14 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SimpleNotificationsModule.forRoot()
   ],
   declarations: [
     DownloadBookComponent,
     DashboardComponent,
     AboutStudentComponent,
     StudentDictionaryComponent,
-    FormWordComponent,
     QuoteComponent,
     GraphComponent,
     LyricsComponent,
@@ -55,7 +56,8 @@ const routes: Routes = [
     SumaryComponent,
     MapComponent,
     NavBarStudentComponent,
-    ModalGraphComponent
+    ModalGraphComponent,
+    NoBookSelectedComponent
   ],
   entryComponents: [ModalGraphComponent]
 })

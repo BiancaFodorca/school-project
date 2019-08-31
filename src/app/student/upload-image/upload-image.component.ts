@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadPhotoService } from '../../shared/services/upload-photo/upload-photo.service';
+import { LocalStorageService } from '../../shared/services/localStorage/local-storage.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-upload-image',
@@ -11,16 +14,70 @@ export class UploadImageComponent implements OnInit {
     text: 'Incarcati o fotografie sugestiva textului citit.'
   };
   imageUploaded = null;
+  bookId;
+  noSelectedBook = true;
+  options = {
+    timeOut: 5000,
+    showProgressBar: true,
+    pauseOnHover: false,
+    clickToClose: false,
+    maxLength: 10
+  };
 
-  constructor() {}
+  constructor(
+    private uploadImgService: UploadPhotoService,
+    private lsService: LocalStorageService,
+    private _service: NotificationsService
+  ) {
+    this.getBookId();
+  }
 
   ngOnInit() {}
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+  handleFileInput(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.fileToUpload = file;
+      };
+    }
+  }
+
+  getBookId() {
+    this.bookId = this.lsService.get('bookId');
+    if (this.bookId) {
+      this.noSelectedBook = false;
+    }
   }
 
   savePhoto() {
-    console.log('save photo');
+    this.uploadImgService
+      .uploadNewPhoto(4, this.bookId, this.fileToUpload)
+      .subscribe(
+        resp => {
+          this.openNotification('success');
+        },
+        error => {
+          this.openNotification('error');
+        }
+      );
+  }
+
+  openNotification(message) {
+    if (message === 'success') {
+      this._service.success(
+        'Yupiii! :)',
+        'Felicitari, imaginea a fost salvata cu succes!',
+        this.options
+      );
+    } else {
+      this._service.error(
+        'Ohh, ne pare rau! :(',
+        'Imaginea nu a putut fi adaugata. Mai incearca dupa ce ai dat refresh paginii.',
+        this.options
+      );
+    }
   }
 }

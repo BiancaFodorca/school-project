@@ -1,7 +1,10 @@
 <div class="content-box">
   <h3 style="text-align:center"><i>Aplicatia 1</i></h3>
   <hr>
-  <div class="row">
+  <div class="row" *ngIf="noSelectedBook">
+      <app-no-book-selected></app-no-book-selected>
+  </div>
+  <div class="row" *ngIf="!noSelectedBook">
     <div class="col-5">
       <p class="text1"><span class="fa fa-book"></span> <i>Copiii, cinstea parintilor; parintii, lauda copiilor.</i></p>
       <p class="text2"><span class="fa fa-book"></span> <i>Prietenul la nevoie se cunoaste!</i></p>
@@ -28,7 +31,7 @@
       </div>
       <div class="row">
         <div class="col-2">
-            <button class="btn btn-primary">Salveaza</button>
+            <button class="btn btn-primary" (click)="createQuote()">Salveaza</button>
         </div>
 
       </div>
@@ -37,3 +40,4 @@
 
   </div>
  </div>
+ <simple-notifications></simple-notifications>

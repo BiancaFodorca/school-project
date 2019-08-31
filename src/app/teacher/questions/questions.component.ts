@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionService } from '../../shared/services/questions/question.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-questions',
@@ -6,61 +8,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  questions = [
-    {
-      id: 1,
-      question: 'Introduceti cuvinte in dictionar',
-      exerciseNumber: 1,
-      userId: 1
-    },
-    {
-      id: 2,
-      question:
-        'Cautati pe internet o imagine sugestiva, ulterior incarcati-o pe pagina',
-      exerciseNumber: 2,
-      userId: 1
-    },
-    {
-      id: 3,
-      question:
-        'Care a fost citatul care a ramas in mintea ta dupa citirea capitolului',
-      exerciseNumber: 3,
-      userId: 1
-    },
-    {
-      id: 4,
-      question: 'Cum v-ati simtit dupa citirea acestui capitol?',
-      exerciseNumber: 4,
-      userId: 1
-    },
-    {
-      id: 5,
-      question: 'Cvintet?',
-      exerciseNumber: 5,
-      userId: 1
-    },
-    {
-      id: 6,
-      question:
-        // tslint:disable-next-line:max-line-length
-        'Rezumat - Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus. Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus. Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.',
-      exerciseNumber: 6,
-      userId: 1
-    },
-    {
-      id: 7,
-      question: 'Harta conceptionala',
-      exerciseNumber: 7,
-      userId: 1
-    }
-  ];
+  questions = [];
   selectedQuestion;
   showEditQuestionTextarea = false;
   editedSelectedQuestion: string;
+  options = {
+    timeOut: 5000,
+    showProgressBar: true,
+    pauseOnHover: false,
+    clickToClose: false,
+    maxLength: 10
+  };
 
-  constructor() {}
+  constructor(
+    private questionService: QuestionService,
+    private _service: NotificationsService
+  ) {
+    this.getAllQuestions();
+  }
 
   ngOnInit() {}
+
+  getAllQuestions() {
+    this.questionService.getAll().subscribe(resp => {
+      this.questions = JSON.parse(resp._body);
+    });
+  }
 
   editQuestion(question) {
     this.selectedQuestion = question;
@@ -69,13 +42,37 @@ export class QuestionsComponent implements OnInit {
   }
 
   saveEditedQuestion() {
-    this.questions.forEach((q, i) => {
-      console.log(q.id);
-      if (q.id === this.selectedQuestion.id) {
-        q.question = this.editedSelectedQuestion;
-        this.clearSelectedQuestionItems();
-      }
-    });
+    const contentData = {
+      question: this.editedSelectedQuestion,
+      exerciseNumber: this.selectedQuestion.exerciseNumber
+    };
+    this.questionService
+      .updateExistingQuestion(this.selectedQuestion.id, contentData)
+      .subscribe(
+        response => {
+          this.openNotification('success');
+          this.getAllQuestions();
+        },
+        error => {
+          this.openNotification('error');
+        }
+      );
+  }
+
+  openNotification(message) {
+    if (message === 'success') {
+      this._service.success(
+        'Felicitari! :)',
+        'Enuntul cerintei a fost modificat cu succes!',
+        this.options
+      );
+    } else {
+      this._service.error(
+        'Ne pare rau! :(',
+        'Enuntul cerintei nu a putut fi modificat. Mai incearca dupa ce ai dat refresh paginii',
+        this.options
+      );
+    }
   }
 
   cancelEditingAction() {

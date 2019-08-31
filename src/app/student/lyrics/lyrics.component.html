@@ -1,9 +1,12 @@
 <div class="content-box">
     <h3 style="text-align:center"><i>Aplicatia 5</i></h3>
     <hr>
-    <div class="row">
+    <div class="row" *ngIf="noSelectedBook">
+        <app-no-book-selected></app-no-book-selected>
+    </div>
+    <div class="row" *ngIf="!noSelectedBook">
       <div class="col-5">
-          <img height="70%" src="./././assets/images/hand.gif" alt="Profesor"/>
+          <img class="photo" src="./././assets/images/hand.gif" alt="Profesor"/>
       </div>
       <div class="col-6">
         <h5><i>
@@ -17,22 +20,13 @@
           </div>
           <div class="row">
             <div class="col-2">
-                <button class="btn btn-primary">Salveaza</button>
+              <button class="btn btn-primary" (click)="createCvintet()">Salveaza</button>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-secondary" title="{{info}}"><i class="fa fa-question-circle"></i></button>
             </div>
           </div>
       </div>
-      <div class="col-1">
-          <div class="tooltip">Hover over me
-              <span class="tooltiptext">
-                  Cvintetul este o poezie cu 5 versuri alcătuite astfel:
-
-                  - Primul vers este un cuvânt-cheie care denumeşte subiectul ce urmează să fie descris. Cuvântul trebuie să fie un substantiv.
-                  - Al doilea vers este format din 2 adjective ce descriu subiectul.
-                  - Al treilea vers este format din 3 verbe, de obicei la gerunziu.
-                  - Al patrulea vers este format din 4 cuvinte (o propoziţie) care exprimă sentimentele faţă de subiectul în temă.
-                  - Ultimul vers este format dintr-un cuvânt care îl caracterizează pe subiect
-              </span>
-            </div>
-      </div>
     </div>
   </div>
+  <simple-notifications></simple-notifications>

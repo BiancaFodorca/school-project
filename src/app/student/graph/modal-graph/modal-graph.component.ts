@@ -38,7 +38,7 @@ export class ModalGraphComponent implements OnInit {
         ],
         datasets: [
           {
-            label: 'Nota',
+            label: 'Punctaj',
             data: this.emotions,
             fill: true,
             lineTension: 0.8,

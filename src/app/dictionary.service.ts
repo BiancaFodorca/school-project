@@ -1,14 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './shared/services/base.service';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { LocalStorageService } from './shared/services/localStorage/local-storage.service';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 export class DictionaryService extends BaseService {
   private baseUrl = 'http://192.168.88.111:8080';
+  private subject = new Subject<any>();
 
-  constructor(private httpClient: HttpClient, private http: Http) {
+  constructor(
+    private httpClient: HttpClient,
+    private http: Http,
+    private lsService: LocalStorageService
+  ) {
     super(httpClient);
+  }
+
+  sendMessage(message: string) {
+    this.subject.next({ text: message });
+  }
+
+  clearMessage() {
+    this.subject.next();
+  }
+
+  getMessage(): Observable<any> {
+    return this.subject.asObservable();
   }
 
   getAll() {
@@ -24,9 +43,16 @@ export class DictionaryService extends BaseService {
   }
 
   addNewWord(word) {
+    const headers: Headers = new Headers();
+    const baseAuthInfo = this.lsService.baseAuthInfo();
+    const userData = headers.append(
+      'Authorization',
+      'Basic ' + btoa(baseAuthInfo)
+    );
     const postReqResponse$ = this.http.post(
       `${this.baseUrl}/school/dictionar`,
-      word
+      word,
+      { headers: headers }
     );
     return postReqResponse$;
   }

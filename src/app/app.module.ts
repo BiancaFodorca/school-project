@@ -13,8 +13,20 @@ import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
 import { LoginComponent } from './auth/login/login.component';
 import { DictionaryService } from './dictionary.service';
-import { BookService } from './teacher/services/book.service';
 import { AuthService } from './auth/auth.service';
+import { BookService } from './teacher/services/book.service';
+import { GeneralBookService } from './shared/services/books/book-service.service';
+import { SharedModule } from './shared/shared.module';
+import { ResponsesService } from './shared/services/responses/responses.service';
+import { LocalStorageService } from './shared/services/localStorage/local-storage.service';
+import { QuestionService } from './shared/services/questions/question.service';
+import { UsersService } from './shared/services/users/users.service';
+import { EmotionsService } from './shared/services/emotions/emotions.service';
+import { UploadPhotoService } from './shared/services/upload-photo/upload-photo.service';
+import { NotifierModule } from 'angular-notifier';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+
 const routes: Routes = [
   {
     path: 'auth',
@@ -47,9 +59,24 @@ const routes: Routes = [
     HttpModule,
     HttpClientModule,
     Angular2FontawesomeModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    SharedModule,
+    NotifierModule,
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot()
   ],
-  providers: [AuthService, DictionaryService, BookService],
+  providers: [
+    AuthService,
+    LocalStorageService,
+    DictionaryService,
+    BookService,
+    ResponsesService,
+    GeneralBookService,
+    QuestionService,
+    UsersService,
+    EmotionsService,
+    UploadPhotoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

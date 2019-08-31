@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormWordComponent } from './form-word.component';
+import { NoBookSelectedComponent } from './no-book-selected.component';
 
-describe('FormWordComponent', () => {
-  let component: FormWordComponent;
-  let fixture: ComponentFixture<FormWordComponent>;
+describe('NoBookSelectedComponent', () => {
+  let component: NoBookSelectedComponent;
+  let fixture: ComponentFixture<NoBookSelectedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormWordComponent ]
+      declarations: [ NoBookSelectedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormWordComponent);
+    fixture = TestBed.createComponent(NoBookSelectedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

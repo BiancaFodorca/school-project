@@ -1,7 +1,10 @@
 <div class="content-box">
     <h3 style="text-align:center"><i>Aplicatia 2</i></h3>
     <hr>
-    <div class="row">
+    <div class="row" *ngIf="noSelectedBook">
+        <app-no-book-selected></app-no-book-selected>
+    </div>
+    <div class="row" *ngIf="!noSelectedBook">
       <div class="col-12">
         <h5><i>
           <span class="fa fa-question-circle" ></span>
@@ -153,5 +156,6 @@
       </div>
 
     </div>
-    <button class="btn btn-primary float-right mr-3" (click)="showGraphic()">Vizualizeaza grafic</button>
+    <button class="btn btn-primary float-right mr-3" *ngIf="!noSelectedBook" (click)="showGraphic()">Vizualizeaza grafic</button>
   </div>
+  <simple-notifications></simple-notifications>

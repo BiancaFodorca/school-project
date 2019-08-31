@@ -48,9 +48,14 @@ export class FormWordComponent implements OnInit {
       word: this.wordForm.controls['word'].value,
       definition: this.wordForm.controls['definition'].value
     };
-    this.dictionaryService.addNewWord(newWordAdded).subscribe(resp => {
-      console.log(resp);
-    });
+    this.dictionaryService.addNewWord(newWordAdded).subscribe(
+      resp => {
+        this.dictionaryService.sendMessage('asuccess');
+      },
+      error => {
+        this.dictionaryService.sendMessage('aerror');
+      }
+    );
     this.closeModal();
   }
 
@@ -62,9 +67,14 @@ export class FormWordComponent implements OnInit {
     };
     this.dictionaryService
       .updateExistingWord(this.word.id, wordToBeAdded)
-      .subscribe(resp => {
-        console.log(resp);
-      });
+      .subscribe(
+        resp => {
+          this.dictionaryService.sendMessage('esuccess');
+        },
+        error => {
+          this.dictionaryService.sendMessage('eerror');
+        }
+      );
     this.closeModal();
   }
 }

@@ -8,6 +8,6 @@
     <li><a [routerLink]="['/statistics']"><strong>Evaluare elevi</strong></a></li>
     <li><a [routerLink]="['/dictionary']"><strong>Vizualizare dictionar</strong></a></li>
     <li><a [routerLink]="['/newaccount']"><strong>Creare cont nou</strong></a></li>
-    <li class="float-right"><a [routerLink]="['/login']"><strong>Logout</strong></a></li>
+    <li class="float-right"><a (click)="logout()"><strong>Logout</strong></a></li>
   </ul>
 </div>

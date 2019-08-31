@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class BookService {
@@ -7,12 +7,12 @@ export class BookService {
 
   postFile(fileToUpload: File, name: string, type: string) {
     const endpoint =
-      'http://192.168.88.111:8080/school/prof/document/upload?fileName=' +
+      "http://192.168.88.111:8080/school/prof/document/upload?fileName=" +
       name +
-      '&type=' +
+      "&type=" +
       type;
     const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    formData.append("fileKey", fileToUpload, fileToUpload.name);
     return this.httpClient.post(endpoint, formData); // , { headers: yourHeadersConfig }
   }
 }
