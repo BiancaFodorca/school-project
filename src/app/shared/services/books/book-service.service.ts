@@ -5,10 +5,11 @@ import { Http, ResponseContentType, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class GeneralBookService extends BaseService {
-  private baseUrl = 'http://192.168.88.111:8080';
+  private baseUrl;
 
   constructor(private httpClient: HttpClient, private http: Http) {
     super(httpClient);
+    this.baseUrl = this.getProvisoryBaseUrl();
   }
 
   getAll() {

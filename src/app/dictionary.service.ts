@@ -7,7 +7,7 @@ import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 export class DictionaryService extends BaseService {
-  private baseUrl = 'http://192.168.88.111:8080';
+  private baseUrl;
   private subject = new Subject<any>();
 
   constructor(
@@ -16,6 +16,7 @@ export class DictionaryService extends BaseService {
     private lsService: LocalStorageService
   ) {
     super(httpClient);
+    this.baseUrl = this.getProvisoryBaseUrl();
   }
 
   sendMessage(message: string) {

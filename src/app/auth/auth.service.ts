@@ -2,16 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers } from '@angular/http';
 import { LocalStorageService } from '../shared/services/localStorage/local-storage.service';
+import { BaseService } from '../shared/services/base.service';
 
 @Injectable()
-export class AuthService {
-  private baseUrl = 'http://192.168.88.111:8080';
+export class AuthService extends BaseService {
+  private baseUrl;
 
   constructor(
     private httpClient: HttpClient,
     private http: Http,
     private lsService: LocalStorageService
-  ) {}
+  ) {
+    super(httpClient);
+    this.baseUrl = this.getProvisoryBaseUrl();
+  }
 
   login(credentials) {
     const headers: Headers = new Headers();

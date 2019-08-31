@@ -7,7 +7,7 @@ import { LocalStorageService } from '../localStorage/local-storage.service';
 
 @Injectable()
 export class UploadPhotoService extends BaseService {
-  private baseUrl = 'http://192.168.88.111:8080';
+  private baseUrl;
 
   constructor(
     private httpClient: HttpClient,
@@ -15,6 +15,7 @@ export class UploadPhotoService extends BaseService {
     private lsService: LocalStorageService
   ) {
     super(httpClient);
+    this.baseUrl = this.getProvisoryBaseUrl();
   }
 
   getAll() {

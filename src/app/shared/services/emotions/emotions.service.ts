@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { BaseService } from "../base.service";
-import { HttpClient } from "@angular/common/http";
-import { Http, Headers } from "@angular/http";
-import { LocalStorageService } from "../localStorage/local-storage.service";
+import { Injectable } from '@angular/core';
+import { BaseService } from '../base.service';
+import { HttpClient } from '@angular/common/http';
+import { Http, Headers } from '@angular/http';
+import { LocalStorageService } from '../localStorage/local-storage.service';
 
 @Injectable()
 export class EmotionsService extends BaseService {
-  private baseUrl = "http://192.168.88.111:8080";
+  private baseUrl;
 
   constructor(
     private httpClient: HttpClient,
@@ -14,6 +14,7 @@ export class EmotionsService extends BaseService {
     private lsService: LocalStorageService
   ) {
     super(httpClient);
+    this.baseUrl = this.getProvisoryBaseUrl();
   }
 
   getAll() {
@@ -25,7 +26,7 @@ export class EmotionsService extends BaseService {
     const getResponse$ = this.http.get(
       `${this.baseUrl}/school/pupil/emotions/find/last?idUser=` +
         userId +
-        "&exerciseNumber=" +
+        '&exerciseNumber=' +
         exerciseNumber
     );
     return getResponse$;
@@ -42,8 +43,8 @@ export class EmotionsService extends BaseService {
     const headers: Headers = new Headers();
     const baseAuthInfo = this.lsService.baseAuthInfo();
     const userData = headers.append(
-      "Authorization",
-      "Basic " + btoa(baseAuthInfo)
+      'Authorization',
+      'Basic ' + btoa(baseAuthInfo)
     );
     const postReqResponse$ = this.http.post(
       `${this.baseUrl}/school/pupil/emotions`,
@@ -57,8 +58,8 @@ export class EmotionsService extends BaseService {
     const headers: Headers = new Headers();
     const baseAuthInfo = this.lsService.baseAuthInfo();
     const userData = headers.append(
-      "Authorization",
-      "Basic " + btoa(baseAuthInfo)
+      'Authorization',
+      'Basic ' + btoa(baseAuthInfo)
     );
     const putReqResponse$ = this.http.put(
       `${this.baseUrl}/school/pupil/emotions/` + id,

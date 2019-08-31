@@ -14,7 +14,6 @@ import { AuthModule } from './auth/auth.module';
 import { LoginComponent } from './auth/login/login.component';
 import { DictionaryService } from './dictionary.service';
 import { AuthService } from './auth/auth.service';
-import { BookService } from './teacher/services/book.service';
 import { GeneralBookService } from './shared/services/books/book-service.service';
 import { SharedModule } from './shared/shared.module';
 import { ResponsesService } from './shared/services/responses/responses.service';
@@ -69,7 +68,6 @@ const routes: Routes = [
     AuthService,
     LocalStorageService,
     DictionaryService,
-    BookService,
     ResponsesService,
     GeneralBookService,
     QuestionService,
