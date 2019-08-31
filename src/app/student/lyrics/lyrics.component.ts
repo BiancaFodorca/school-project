@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResponsesService } from '../../shared/services/responses/responses.service';
 import { LocalStorageService } from '../../shared/services/localStorage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
+import { QuestionService } from '../../shared/services/questions/question.service';
 
 @Component({
   selector: 'app-lyrics',
@@ -24,16 +25,27 @@ export class LyricsComponent implements OnInit {
     clickToClose: false,
     maxLength: 10
   };
+  exerciceNumber = 5;
 
   constructor(
     private responseService: ResponsesService,
     private lsService: LocalStorageService,
-    private _service: NotificationsService
+    private _service: NotificationsService,
+    private questionService: QuestionService
   ) {
     this.getBookId();
+    this.getQuestionSentence();
   }
 
   ngOnInit() {}
+
+  getQuestionSentence() {
+    this.questionService
+      .getQuestionByExerciseNumber(this.exerciceNumber)
+      .subscribe(resp => {
+        this.question.text = JSON.parse(resp._body).question;
+      });
+  }
 
   getBookId() {
     this.bookId = this.lsService.get('bookId');

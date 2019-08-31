@@ -1,20 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ModalGraphComponent } from "./modal-graph/modal-graph.component";
-import { EmotionsService } from "../../shared/services/emotions/emotions.service";
-import { LocalStorageService } from "../../shared/services/localStorage/local-storage.service";
-import { NotificationsService } from "angular2-notifications";
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalGraphComponent } from './modal-graph/modal-graph.component';
+import { EmotionsService } from '../../shared/services/emotions/emotions.service';
+import { LocalStorageService } from '../../shared/services/localStorage/local-storage.service';
+import { NotificationsService } from 'angular2-notifications';
+import { QuestionService } from '../../shared/services/questions/question.service';
 
 @Component({
-  selector: "app-graph",
-  templateUrl: "./graph.component.html",
-  styleUrls: ["./graph.component.css"]
+  selector: 'app-graph',
+  templateUrl: './graph.component.html',
+  styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit {
   gradesList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   question = {
     text:
-      "Oferiti note pe o scara de la 0 la 10 in functie de emotiile pe care le-ati simtit in momentul in care ati lecturat capitolul."
+      'Oferiti note pe o scara de la 0 la 10 in functie de emotiile pe care le-ati simtit in momentul in care ati lecturat capitolul.'
   };
   gratefulGrade;
   optimismGrade;
@@ -33,23 +34,34 @@ export class GraphComponent implements OnInit {
     clickToClose: false,
     maxLength: 10
   };
+  exerciceNumber = 2;
 
   constructor(
     private modalService: NgbModal,
     private emotionsService: EmotionsService,
     private lsService: LocalStorageService,
-    private _service: NotificationsService
+    private _service: NotificationsService,
+    private questionService: QuestionService
   ) {
     this.getBookId();
+    this.getQuestionSentence();
   }
 
   ngOnInit() {}
 
   getBookId() {
-    this.bookId = this.lsService.get("bookId");
+    this.bookId = this.lsService.get('bookId');
     if (this.bookId) {
       this.noSelectedBook = false;
     }
+  }
+
+  getQuestionSentence() {
+    this.questionService
+      .getQuestionByExerciseNumber(this.exerciceNumber)
+      .subscribe(resp => {
+        this.question.text = JSON.parse(resp._body).question;
+      });
   }
 
   onSelectionGratefulChange(grade) {
@@ -110,10 +122,10 @@ export class GraphComponent implements OnInit {
     };
     this.emotionsService.addSetOfEmotions(data).subscribe(
       resp => {
-        this.openNotification("success");
+        this.openNotification('success');
       },
       error => {
-        this.openNotification("error");
+        this.openNotification('error');
       }
     );
   }
@@ -138,16 +150,16 @@ export class GraphComponent implements OnInit {
   }
 
   openNotification(message) {
-    if (message === "success") {
+    if (message === 'success') {
       this._service.success(
-        "Yupiii! :)",
-        "Felicitari, punctajul acordat emotiilor au fost salvate cu succes!",
+        'Yupiii! :)',
+        'Felicitari, punctajul acordat emotiilor au fost salvate cu succes!',
         this.options
       );
     } else {
       this._service.error(
-        "Ohh, ne pare rau! :(",
-        "Punctajul acordat emotiilor nu a putut fi adaugat. Mai incearca dupa ce ai dat refresh paginii",
+        'Ohh, ne pare rau! :(',
+        'Punctajul acordat emotiilor nu a putut fi adaugat. Mai incearca dupa ce ai dat refresh paginii',
         this.options
       );
     }

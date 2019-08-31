@@ -30,6 +30,13 @@ export class QuestionService extends BaseService {
     return getResponse$;
   }
 
+  getQuestionByExerciseNumber(exerciseNumber) {
+    const getResponse$ = this.http.get(
+      `${this.baseUrl}/school/prof/questions/active/` + exerciseNumber
+    );
+    return getResponse$;
+  }
+
   addNewQuestion(content) {
     const headers: Headers = new Headers();
     const baseAuthInfo = this.lsService.baseAuthInfo();

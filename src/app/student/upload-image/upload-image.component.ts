@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadPhotoService } from '../../shared/services/upload-photo/upload-photo.service';
 import { LocalStorageService } from '../../shared/services/localStorage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
+import { QuestionService } from '../../shared/services/questions/question.service';
 
 @Component({
   selector: 'app-upload-image',
@@ -23,16 +24,27 @@ export class UploadImageComponent implements OnInit {
     clickToClose: false,
     maxLength: 10
   };
+  exerciceNumber = 4;
 
   constructor(
     private uploadImgService: UploadPhotoService,
     private lsService: LocalStorageService,
-    private _service: NotificationsService
+    private _service: NotificationsService,
+    private questionService: QuestionService
   ) {
     this.getBookId();
+    this.getQuestionSentence();
   }
 
   ngOnInit() {}
+
+  getQuestionSentence() {
+    this.questionService
+      .getQuestionByExerciseNumber(this.exerciceNumber)
+      .subscribe(resp => {
+        this.question.text = JSON.parse(resp._body).question;
+      });
+  }
 
   handleFileInput(event) {
     const reader = new FileReader();
